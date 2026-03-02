@@ -150,6 +150,16 @@ Milestone 1 has been successfully completed.
 
 The project environment is now stable and ready for Groq API integration.
 
+# Milestone 2 Status
+
+Milestone 2 has been successfully completed.
+
+- Generated Groq API key
+- Configured secure .env file
+- Initialized Groq client
+- Centralized model configuration
+- Successfully tested LLM response
+
 ---
 
 # Project Structure
@@ -157,10 +167,12 @@ The project environment is now stable and ready for Groq API integration.
 ResearchHub-AI/
 │
 ├── backend/
-│ └── requirements.txt
+│   ├── requirements.txt
+│   ├── .env   (should exist locally)
+│   └── utils/
+│       └── groq_client.py
 │
 ├── frontend/
-│
 ├── .gitignore
 ├── README.md
 ```
