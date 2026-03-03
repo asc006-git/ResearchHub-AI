@@ -160,6 +160,36 @@ Milestone 2 has been successfully completed.
 - Centralized model configuration
 - Successfully tested LLM response
 
+# Milestone 3: Backend Development with FastAPI
+
+Status: Completed
+This milestone focused on building the core backend infrastructure using FastAPI to manage authentication, research paper handling, and AI-powered chat functionality.
+
+### Activity 3.1: Authentication Endpoints
+
+- Implemented secure user registration and login.
+- Password hashing using bcrypt.
+- JWT token generation for stateless authentication.
+- Protected routes using dependency injection.
+- Integrated PostgreSQL with SQLAlchemy ORM.
+
+### Activity 3.2: Paper Search API
+
+- Created protected search endpoint for academic papers.
+- Implemented paper import functionality.
+- Associated imported papers with authenticated users.
+- Ensured user-level data isolation.
+
+### Activity 3.3: AI Chatbot Endpoint
+
+- Implemented workspace-based chat endpoint.
+- Retrieved workspace papers dynamically.
+- Constructed research context for LLM.
+- Integrated Groq Llama 3.3 70B model.
+- Stored conversation history for contextual continuity.
+
+The backend now supports secure authentication, paper management, and AI-driven research interaction.
+
 ---
 
 # Project Structure
@@ -167,14 +197,32 @@ Milestone 2 has been successfully completed.
 ResearchHub-AI/
 │
 ├── backend/
-│   ├── requirements.txt
-│   ├── .env   (should exist locally)
-│   └── utils/
-│       └── groq_client.py
+│ ├── pycache/
+│ ├── routers/
+│ │ ├── pycache/
+│ │ ├── auth.py
+│ │ └── chat.py
+│ │
+│ ├── utils/
+│ │ ├── pycache/
+│ │ ├── init.py
+│ │ └── groq_client.py
+│ │
+│ ├── init.py
+│ ├── .env
+│ ├── database.py
+│ ├── main.py
+│ ├── models.py
+│ ├── requirements.txt
+│ ├── schemas.py
+│ └── security.py
 │
 ├── frontend/
+│
+├── venv/
+│
 ├── .gitignore
-├── README.md
+└── README.md
 ```
 ---
 
