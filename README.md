@@ -1,5 +1,4 @@
 # ResearchHub AI
-
 ResearchHub AI is an intelligent, agentic AI-powered research paper management platform designed to help researchers efficiently discover, organize, and analyze academic literature.  
 
 The system integrates FastAPI for backend processing, React + TypeScript for frontend development, and Groq’s Llama 3.3 70B model for advanced research-focused AI assistance.
