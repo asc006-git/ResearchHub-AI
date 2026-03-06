@@ -36,6 +36,19 @@ Before setting up and running ResearchHub AI, ensure the following tools and kno
 
 ---
 
+## Run Project
+
+- clone the repository
+- cd ResearchHub-AI/
+- create virtual environment
+- pip install requirements
+- python -m uvicorn backend.main:app --reload
+- cd frontend/
+- npm install
+- npm run dev (now the frontend will be running on http://localhost:5173/)
+
+---
+
 ## Technical Knowledge
 
 - Strong understanding of Python
@@ -197,32 +210,62 @@ The backend now supports secure authentication, paper management, and AI-driven 
 ResearchHub-AI/
 │
 ├── backend/
-│ ├── pycache/
-│ ├── routers/
-│ │ ├── pycache/
-│ │ ├── auth.py
-│ │ └── chat.py
-│ │
-│ ├── utils/
-│ │ ├── pycache/
-│ │ ├── init.py
-│ │ └── groq_client.py
-│ │
-│ ├── init.py
-│ ├── .env
-│ ├── database.py
-│ ├── main.py
-│ ├── models.py
-│ ├── requirements.txt
-│ ├── schemas.py
-│ └── security.py
+│   ├── routers/
+│   │   ├── auth.py
+│   │   └── chat.py
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   └── groq_client.py
+│   │
+│   ├── __init__.py
+│   ├── .env
+│   ├── database.py
+│   ├── main.py
+│   ├── models.py
+│   ├── requirements.txt
+│   ├── schemas.py
+│   └── security.py
 │
 ├── frontend/
-│
-├── venv/
+│   ├── node_modules/
+│   ├── public/
+│   │   └── vite.svg
+│   │
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── axios.ts
+│   │   │   ├── auth.ts
+│   │   │   ├── chat.ts
+│   │   │   └── papers.ts
+│   │   │
+│   │   ├── components/
+│   │   │   └── ProtectedRoute.tsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Login.tsx
+│   │   │   ├── Register.tsx
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── Search.tsx
+│   │   │   └── Workspace.tsx
+│   │   │
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   ├── index.css
+│   │   └── vite-env.d.ts
+│   │
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   ├── vite.config.ts
+│   └── index.html
 │
 ├── .gitignore
-└── README.md
+├── README.md
+└── venv/
 ```
 ---
 

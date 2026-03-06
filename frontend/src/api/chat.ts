@@ -11,3 +11,11 @@ export const sendMessage = (workspaceId: number, content: string) => {
     content,
   })
 }
+
+export const getWorkspaces = () => {
+  return api.get("/chat/workspace")
+}
+
+export const getPapers = () => {
+  return api.get("/chat/papers")
+}

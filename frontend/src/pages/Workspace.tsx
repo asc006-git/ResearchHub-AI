@@ -1,34 +1,9 @@
-// import { useParams } from "react-router-dom"
-
-// export default function Workspace() {
-//   const { id } = useParams()
-
-//   return (
-//     <div className="p-8">
-//       <h1 className="text-2xl font-bold">Workspace {id}</h1>
-
-//       <div className="mt-6">
-//         <h2 className="text-lg font-semibold mb-4">Chat with Research Papers</h2>
-
-//         <div className="border p-4 h-64 overflow-y-auto mb-4">
-//           Chat messages will appear here.
-//         </div>
-
-//         <input
-//           className="border p-2 w-full"
-//           placeholder="Ask a research question..."
-//         />
-//       </div>
-//     </div>
-//   )
-// }
-
-
 import { useParams } from "react-router-dom"
-import { useState } from "react"
-import { sendMessage } from "../api/chat"
+import { useState, useEffect } from "react"
+import { sendMessage, getPapers } from "../api/chat"
 
 export default function Workspace() {
+
   const { id } = useParams()
   const workspaceId = Number(id)
 
@@ -37,7 +12,32 @@ export default function Workspace() {
     { role: string; content: string }[]
   >([])
 
+  const [papers, setPapers] = useState<any[]>([])
+
+  useEffect(() => {
+
+    const fetchPapers = async () => {
+
+      try {
+
+        const res = await getPapers()
+
+        setPapers(res.data)
+
+      } catch (err) {
+
+        console.error("Failed to load papers", err)
+
+      }
+
+    }
+
+    fetchPapers()
+
+  }, [])
+
   const handleSend = async () => {
+
     if (!message.trim()) return
 
     const userMessage = { role: "user", content: message }
@@ -46,6 +46,7 @@ export default function Workspace() {
     setMessage("")
 
     try {
+
       const res = await sendMessage(workspaceId, message)
 
       const aiMessage = {
@@ -54,20 +55,64 @@ export default function Workspace() {
       }
 
       setChatHistory((prev) => [...prev, aiMessage])
+
     } catch (err) {
+
       console.error("Chat error:", err)
+
     }
+
   }
 
   return (
+
     <div className="p-8 max-w-3xl mx-auto">
+
       <h1 className="text-2xl font-bold mb-6">
         Workspace {workspaceId}
       </h1>
 
+      {/* Imported Papers */}
+
+      <div className="mb-6">
+
+        <h2 className="text-lg font-semibold mb-2">
+          Imported Papers
+        </h2>
+
+        {papers.length === 0 && (
+          <p className="text-gray-500">
+            No papers imported yet.
+          </p>
+        )}
+
+        {papers.map((paper) => (
+
+          <div
+            key={paper.id}
+            className="border p-3 mb-2 rounded bg-white shadow"
+          >
+
+            <p className="font-medium">
+              {paper.title}
+            </p>
+
+            <p className="text-sm text-gray-600">
+              {paper.authors}
+            </p>
+
+          </div>
+
+        ))}
+
+      </div>
+
       {/* Chat Display */}
+
       <div className="border p-4 h-96 overflow-y-auto mb-4 rounded bg-white shadow">
+
         {chatHistory.map((msg, index) => (
+
           <div
             key={index}
             className={`mb-3 ${
@@ -76,6 +121,7 @@ export default function Workspace() {
                 : "text-left"
             }`}
           >
+
             <div
               className={`inline-block px-4 py-2 rounded ${
                 msg.role === "user"
@@ -83,14 +129,21 @@ export default function Workspace() {
                   : "bg-gray-200 text-black"
               }`}
             >
+
               {msg.content}
+
             </div>
+
           </div>
+
         ))}
+
       </div>
 
       {/* Input */}
+
       <div className="flex gap-2">
+
         <input
           className="flex-1 border p-2 rounded"
           placeholder="Ask a research question..."
@@ -104,7 +157,11 @@ export default function Workspace() {
         >
           Send
         </button>
+
       </div>
+
     </div>
+
   )
+
 }

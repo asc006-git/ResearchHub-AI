@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import insert, select
+import feedparser #edit
+import requests #edit
 
 from backend.database import database, engine, Base
 from backend import models
@@ -51,21 +53,39 @@ def read_root():
     return {"message": "Welcome to ResearchHub AI API"}
 
 
-# -----------------------------
-# PAPER SEARCH ENDPOINT
-# -----------------------------
 @app.get("/papers/search")
 async def search_papers(query: str, current_user=Depends(get_current_user)):
-    return {
-        "papers": [
-            {
-                "title": f"Research on {query}",
-                "authors": "Author A, Author B",
-                "abstract": f"This study explores {query} in detail.",
-                "published_date": "2024"
-            }
-        ]
+
+    url = "https://export.arxiv.org/api/query"
+
+    params = {
+        "search_query": f"all:{query}",
+        "start": 0,
+        "max_results": 5
     }
+
+    headers = {
+        "User-Agent": "ResearchHub-AI"
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+
+    feed = feedparser.parse(response.text)
+
+    papers = []
+
+    for entry in feed.entries:
+
+        papers.append({
+            "title": entry.title,
+            "authors": ", ".join(author.name for author in entry.authors),
+            "abstract": entry.summary.replace("\n", " "),
+            "published_date": entry.published
+        })
+
+    print("Entries found:", len(papers))
+
+    return {"papers": papers}
 
 
 # -----------------------------

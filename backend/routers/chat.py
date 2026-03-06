@@ -87,3 +87,27 @@ async def chat_with_workspace(
     await database.execute(conversation_query)
 
     return {"response": ai_text}
+
+
+#show workspaces
+@router.get("/workspace")
+async def get_workspaces(current_user=Depends(get_current_user)):
+
+    query = select(Workspace).where(
+        Workspace.owner_id == current_user.id
+    )
+
+    workspaces = await database.fetch_all(query)
+
+    return workspaces
+
+@router.get("/papers")
+async def get_papers(current_user=Depends(get_current_user)):
+
+    query = select(Paper).where(
+        Paper.owner_id == current_user.id
+    )
+
+    papers = await database.fetch_all(query)
+
+    return papers
