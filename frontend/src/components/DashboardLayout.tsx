@@ -3,6 +3,10 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
+interface DashboardLayoutProps {
+    children?: React.ReactNode;
+}
+
 const DashboardLayout: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
