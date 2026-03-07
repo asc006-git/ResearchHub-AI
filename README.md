@@ -1,286 +1,374 @@
 # ResearchHub AI
-ResearchHub AI is an intelligent, agentic AI-powered research paper management platform designed to help researchers efficiently discover, organize, and analyze academic literature.The system integrates FastAPI for backend processing, React + TypeScript for frontend development, and Groq’s Llama 3.3 70B model for advanced research-focused AI assistance.
+ResearchHub AI is an AI-powered academic research assistant designed to help researchers, students, and developers efficiently discover, organize, and analyze scholarly papers. The platform integrates research paper discovery, workspace management, AI-based literature analysis, and structured research note management in a unified system.
+
+The objective of this project is to streamline the research workflow by combining artificial intelligence with academic paper discovery tools.
 
 ---
 
-## Project Overview
+# Project Overview
 
-With the exponential growth of research publications, manually searching and analyzing papers is time-consuming.  
+ResearchHub AI provides an organized environment where users can search research papers from online scholarly databases, import them into dedicated research workspaces, analyze them with AI tools, and maintain structured research notes.
 
-ResearchHub AI solves this by:
-
-- Providing intelligent academic paper search
-- Organizing papers into workspaces
-- Enabling AI-powered contextual analysis
-- Implementing semantic search using vector embeddings
-- Securing user data with JWT authentication
+The system integrates external research APIs and AI models to enable intelligent research assistance and knowledge synthesis.
 
 ---
 
-# Pre-requisites
+# System Architecture
 
-Before setting up and running ResearchHub AI, ensure the following tools and knowledge are available.
+The platform follows a modern full-stack architecture.
 
----
-
-## System Requirements
-
-- Python 3.9 or higher
-- Node.js (v18+ recommended)
-- npm or yarn
-- Git installed
-- PostgreSQL installed (for database)
-
----
-
-## Run Project
-
-- clone the repository
-- cd ResearchHub-AI/
-- create virtual environment
-- pip install requirements
-- python -m uvicorn backend.main:app --reload
-- cd frontend/
-- npm install
-- npm run dev (now the frontend will be running on http://localhost:5173/)
+User  
+↓  
+Frontend Application (React + TypeScript)  
+↓  
+Backend API (FastAPI - Python)  
+↓  
+PostgreSQL Database  
+↓  
+External APIs (OpenAlex Research API and Groq AI)
 
 ---
 
-## Technical Knowledge
+# Core Features
 
-- Strong understanding of Python
-- Familiarity with FastAPI
-- Basic knowledge of React and TypeScript
-- Understanding of REST APIs
-- Knowledge of SQL and relational databases
-- Basic understanding of JWT authentication
-- Basic understanding of Large Language Models (LLMs)
+## User Authentication
 
----
+The platform supports secure user authentication.
 
-## External Services
+Capabilities include:
 
-- Groq API Account  
-  https://console.groq.com/
+- User registration
+- Secure login with JWT authentication
+- Session management
+- Security question based password recovery
+- Protected backend routes
 
 ---
 
-## Backend Dependencies
+## Research Paper Discovery
 
-- fastapi==0.104.1
-- uvicorn[standard]==0.24.0
-- python-dotenv==1.0.0
-- groq==0.4.1
-- httpx==0.25.2
-- python-multipart==0.0.6
-- python-jose[cryptography]==3.3.0
-- passlib[bcrypt]==1.7.4
-- sqlalchemy==2.0.23
-- databases[postgresql]==0.8.0
-- numpy==1.24.3
-- sentence-transformers==2.2.2
+Users can search academic papers through integrated scholarly databases.
 
-Install using:
-```bash
-pip install -r requirements.txt
-```
----
+Capabilities include:
 
-# Project Workflow
-
-The development of ResearchHub AI follows a milestone-based approach to ensure systematic implementation and scalability.
+- Keyword-based research paper search
+- Paper metadata retrieval
+- Display of title, authors, abstract, year, and source
+- Integration with OpenAlex API
+- Import papers directly into workspaces
+- Reading time estimation for papers
 
 ---
 
-## Milestone 1: Requirements Specification and Project Setup
+## Workspace Management
 
-### Activity 1.1: Create `requirements.txt`
-- Defined version-locked backend dependencies.
-- Ensured reproducibility across systems.
+Workspaces allow users to organize research topics and projects.
 
-### Activity 1.2: Install Required Libraries
-- Created isolated Python virtual environment using `venv`.
-- Installed dependencies using pip.
-- Configured `.gitignore` to prevent tracking unnecessary files.
+Features include:
 
----
-
-## Milestone 2: Groq API Integration and Model Initialization
-
-- Generate Groq API Key.
-- Configure environment variables.
-- Initialize Groq client with `llama-3.3-70b-versatile`.
-- Set temperature to 0.3 for precise research analysis.
+- Create research workspaces
+- Import research papers into workspaces
+- Manage multiple research topics
+- Delete workspace functionality
+- Workspace-based AI analysis
 
 ---
 
-## Milestone 3: Backend Development with FastAPI
+## AI Research Assistant
 
-- Implement JWT-based authentication.
-- Develop paper search API.
-- Build AI-powered chatbot endpoint using RAG.
+The AI assistant enables interactive research support.
 
----
+Capabilities include:
 
-## Milestone 4: Frontend Development (React + TypeScript)
-
-- Build authentication UI components.
-- Integrate frontend with backend APIs.
-- Implement dashboard and workspace interface.
+- Answer research-related questions
+- Provide structured responses with headings and points
+- Summarize research papers
+- Perform cross-paper analysis
+- Provide academic-style explanations
 
 ---
 
-## Milestone 5: AI Agent & Context Management
+## Literature Review Generator
 
-- Generate embeddings for research papers.
-- Implement semantic search.
-- Maintain workspace-specific AI context.
-- Enable multi-document synthesis.
+This module generates structured literature reviews from imported papers.
 
----
+Generated output includes:
 
-## Milestone 6: Testing & Deployment
-
-- Run backend with Uvicorn.
-- Start frontend development server.
-- Configure CORS for cross-origin requests.
-- Secure environment variables.
+- Research background
+- Key findings
+- Comparative analysis
+- Major contributions
+- Summary of research trends
 
 ---
 
-# Milestone 1 Status
+## Research Gap Detector
 
-Milestone 1 has been successfully completed.
+This module analyzes imported research papers and detects possible research gaps.
 
-✔ Created structured backend folder  
-✔ Added version-locked `requirements.txt`  
-✔ Configured `.gitignore`  
-✔ Set up Python virtual environment  
-✔ Installed all backend dependencies  
+Output includes:
 
-The project environment is now stable and ready for Groq API integration.
+- Underexplored topics
+- Contradictory findings
+- Future research directions
+- Potential problem statements
 
-# Milestone 2 Status
+---
 
-Milestone 2 has been successfully completed.
+## Research Notes
 
-- Generated Groq API key
-- Configured secure .env file
-- Initialized Groq client
-- Centralized model configuration
-- Successfully tested LLM response
+Users can maintain notes related to their research workspaces.
 
-# Milestone 3: Backend Development with FastAPI
+Capabilities include:
 
-Status: Completed
-This milestone focused on building the core backend infrastructure using FastAPI to manage authentication, research paper handling, and AI-powered chat functionality.
+- Create notes
+- Edit and delete notes
+- Timestamped research entries
+- AI-assisted note generation
 
-### Activity 3.1: Authentication Endpoints
+---
 
-- Implemented secure user registration and login.
-- Password hashing using bcrypt.
-- JWT token generation for stateless authentication.
-- Protected routes using dependency injection.
-- Integrated PostgreSQL with SQLAlchemy ORM.
+## Activity History
 
-### Activity 3.2: Paper Search API
+The platform records user activity for tracking research progress.
 
-- Created protected search endpoint for academic papers.
-- Implemented paper import functionality.
-- Associated imported papers with authenticated users.
-- Ensured user-level data isolation.
+Examples include:
 
-### Activity 3.3: AI Chatbot Endpoint
+- Workspace creation
+- Paper imports
+- AI analysis requests
+- Research queries
 
-- Implemented workspace-based chat endpoint.
-- Retrieved workspace papers dynamically.
-- Constructed research context for LLM.
-- Integrated Groq Llama 3.3 70B model.
-- Stored conversation history for contextual continuity.
+---
 
-The backend now supports secure authentication, paper management, and AI-driven research interaction.
+# Unique Features
+
+ResearchHub AI combines multiple academic research tools into a unified platform.
+
+Key differentiators include:
+
+- AI-powered literature review generation
+- Automated research gap detection
+- Workspace-based research organization
+- Academic paper discovery integration
+- AI-assisted scholarly analysis
+- Structured research workflow management
+
+---
+
+# Technology Stack
+
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- Async database handling
+- JWT Authentication
+
+## Database
+
+- PostgreSQL
+
+## External APIs
+
+- OpenAlex API (research paper discovery)
+- Groq API (AI assistant)
+
+## Development Tools
+
+- Git
+- GitHub
+- VS Code
+- Postman
+
+## Deployment Platforms
+
+- Render (Backend and PostgreSQL)
+- Render Static Site or Vercel (Frontend)
 
 ---
 
 # Project Structure
+
 ```
-ResearchHub-AI/
+ResearchHub-AI
 │
-├── backend/
-│   ├── routers/
+├── backend
+│   ├── routers
 │   │   ├── auth.py
-│   │   └── chat.py
+│   │   ├── papers.py
+│   │   ├── workspace.py
+│   │   └── research.py
 │   │
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   └── groq_client.py
+│   ├── services
+│   │   ├── paper_search.py
+│   │   └── ai_service.py
 │   │
-│   ├── __init__.py
-│   ├── .env
-│   ├── database.py
-│   ├── main.py
 │   ├── models.py
-│   ├── requirements.txt
 │   ├── schemas.py
-│   └── security.py
+│   ├── database.py
+│   ├── security.py
+│   └── main.py
 │
-├── frontend/
-│   ├── node_modules/
-│   ├── public/
-│   │   └── vite.svg
-│   │
-│   ├── src/
-│   │   ├── api/
-│   │   │   ├── axios.ts
-│   │   │   ├── auth.ts
-│   │   │   ├── chat.ts
-│   │   │   └── papers.ts
-│   │   │
-│   │   ├── components/
-│   │   │   └── ProtectedRoute.tsx
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── Login.tsx
-│   │   │   ├── Register.tsx
-│   │   │   ├── Dashboard.tsx
-│   │   │   ├── Search.tsx
-│   │   │   └── Workspace.tsx
-│   │   │
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   ├── index.css
-│   │   └── vite-env.d.ts
-│   │
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── tsconfig.json
-│   ├── tsconfig.node.json
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
-│   ├── vite.config.ts
-│   └── index.html
-│
-├── .gitignore
-├── README.md
-└── venv/
+└── frontend
+    ├── src
+    │   ├── components
+    │   ├── pages
+    │   ├── services
+    │   ├── context
+    │   └── types
+    │
+    ├── package.json
+    └── vite.config.ts
 ```
+
 ---
 
-# Security Practices
+# Installation Guide
 
-- Environment variables stored in `.env`
-- JWT-based authentication
-- Password hashing using bcrypt
-- CORS properly configured
+## Prerequisites
+
+The following software must be installed:
+
+- Python 3.10 or higher
+- Node.js 18 or higher
+- PostgreSQL
+- Git
+
+---
+
+# Backend Setup
+
+Navigate to the backend directory.
+
+```
+cd backend
+```
+
+Create a virtual environment.
+
+```
+python -m venv 
+```
+
+Activate the virtual environment.
+
+Windows
+
+```
+venv\Scripts\activate
+```
+
+Install dependencies.
+
+```
+pip install -r requirements.txt
+```
+
+Create environment variables.
+
+Create a `.env` file in the backend directory.
+
+```
+DATABASE_URL=postgresql://username:password@localhost:5432/researchhub
+SECRET_KEY=your_secret_key
+GROQ_API_KEY=your_api_key
+```
+
+Start the backend server.
+
+```
+uvicorn main:app --reload
+```
+
+Backend server will run at:
+
+```
+http://localhost:8000
+```
+
+API documentation will be available at:
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+# Frontend Setup
+
+Navigate to the frontend directory.
+
+```
+cd frontend
+```
+
+Install dependencies.
+
+```
+npm install
+```
+
+Start the development server.
+
+```
+npm run dev
+```
+
+Frontend will run at:
+
+```
+http://localhost:5173
+```
+
+---
+
+# Database Setup
+
+Create a PostgreSQL database.
+
+```
+CREATE DATABASE researchhub;
+```
+
+Update the database connection string in the environment variables.
+
+Run the backend server to automatically create tables.
 
 ---
 
 # Future Enhancements
 
-- Multi-document summarization
-- Citation tracking
-- Paper similarity visualization
-- Collaborative workspaces
-- Streaming AI responses
+Potential future improvements include:
 
----
+- Collaborative research workspaces
+- Citation export functionality
+- PDF annotation tools
+- Knowledge graph visualization
+- Advanced research analytics
+
+--- 
+
+# UI Screenshots : 
+<img width="1914" height="873" alt="image" src="https://github.com/user-attachments/assets/08d98f8a-6e17-445b-bcc7-aed0dc471afa" />
+
+<img width="1920" height="1080" alt="Screenshot (399)" src="https://github.com/user-attachments/assets/dd901149-e17d-4d1e-a181-9adb891e49f7" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2fb3091d-8b6a-4d9a-9e9f-7789de4d26cc" />
+
+<img width="1919" height="870" alt="image" src="https://github.com/user-attachments/assets/51fe216f-cb4d-4994-ae9f-00be0959280f" />
+
+
+# License
+
+This project is developed for educational and research purposes.
