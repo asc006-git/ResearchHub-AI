@@ -361,10 +361,16 @@ Potential future improvements include:
 # UI Screenshots : 
 <img width="1914" height="873" alt="image" src="https://github.com/user-attachments/assets/08d98f8a-6e17-445b-bcc7-aed0dc471afa" />
 
+
+
 <img width="1920" height="1080" alt="Screenshot (399)" src="https://github.com/user-attachments/assets/dd901149-e17d-4d1e-a181-9adb891e49f7" />
 
 
+
+
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2fb3091d-8b6a-4d9a-9e9f-7789de4d26cc" />
+
+
 
 <img width="1919" height="870" alt="image" src="https://github.com/user-attachments/assets/51fe216f-cb4d-4994-ae9f-00be0959280f" />
 
