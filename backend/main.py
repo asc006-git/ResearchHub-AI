@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import insert, select
 
+
 from database import database, engine, Base
 import models
 from routers.auth import router as auth_router
