@@ -3,7 +3,12 @@ ResearchHub AI is an AI-powered academic research assistant designed to help res
 
 The objective of this project is to streamline the research workflow by combining artificial intelligence with academic paper discovery tools.
 
----
+--- 
+
+##  DEMO VIDEO 
+```
+https://youtu.be/EyCmc5188ZI
+```
 
 # Project Overview
 
