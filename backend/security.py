@@ -7,9 +7,9 @@ from fastapi.security import OAuth2PasswordBearer
 import os
 from dotenv import load_dotenv
 
-from backend.database import database
-from backend.models import User
-from sqlalchemy import select
+from database import database
+from models import User
+from sqlalchemy import select, func
 
 load_dotenv()
 
@@ -59,7 +59,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise credentials_exception
 
-    query = select(User).where(User.email == email)
+    query = select(User).where(func.lower(User.email) == email.lower())
     user = await database.fetch_one(query)
 
     if user is None:

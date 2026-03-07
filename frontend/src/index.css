@@ -1,1 +1,101 @@
 @import "tailwindcss";
+
+:root {
+  --font-academic: Verdana, Geneva, Tahoma, sans-serif;
+  --color-brand-bg: #0b1220;
+  --color-brand-card: #111827;
+  --color-brand-accent: #22c1f1;
+  --accent-color: #22c1f1;
+  /* Dynamic accent color */
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  font-family: var(--font-academic);
+  line-height: 1.6;
+  font-weight: 400;
+
+  background-color: var(--color-brand-bg);
+  color: var(--color-text-primary);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-academic);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-brand-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #4b5563;
+}
+
+input,
+textarea,
+select {
+  color: var(--color-text-primary) !important;
+  background-color: #1a2333 !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-brand-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 5px;
+  border: 2px solid var(--color-brand-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+.dark-card {
+  background: var(--color-brand-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.glow-hover:hover {
+  border-color: rgba(34, 193, 241, 0.2);
+  transform: translateY(-2px);
+}
+
+.glass-morphism {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+@theme {
+  --animate-spin-slow: spin 3s linear infinite;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}

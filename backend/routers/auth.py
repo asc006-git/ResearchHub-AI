@@ -1,9 +1,20 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from backend.schemas import UserCreate, UserResponse, Token, TokenData
-from backend.database import database
-from backend.models import User
-from backend.security import (
+from sqlalchemy import func
+from schemas import (
+    UserCreate, 
+    UserResponse, 
+    Token, 
+    TokenData, 
+    ForgotPasswordRequest, 
+    ResetPasswordRequest,
+    SecurityQuestionResponse,
+    VerifySecurityAnswerRequest,
+    VerifySecurityAnswerResponse
+)
+from database import database
+from models import User
+from security import (
     verify_password,
     get_password_hash,
     create_access_token,
@@ -15,13 +26,11 @@ from jose import JWTError, jwt
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-
-
 # -----------------------------
-# Utility: Get user by email
+# Utility: Get user by email (Case Insensitive)
 # -----------------------------
 async def get_user_by_email(email: str):
-    query = User.__table__.select().where(User.email == email)
+    query = User.__table__.select().where(func.lower(User.email) == email.lower())
     return await database.fetch_one(query)
 
 
@@ -34,17 +43,21 @@ async def register(user: UserCreate):
     db_user = await get_user_by_email(user.email)
     if db_user:
         raise HTTPException(
-            status_code=400,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
         )
 
     hashed_password = get_password_hash(user.password)
+    # Hash security answer using same bcrypt logic
+    security_answer_hash = get_password_hash(user.security_answer)
 
     query = User.__table__.insert().values(
         email=user.email,
         hashed_password=hashed_password,
         is_active=True,
-        is_admin=user.is_admin
+        is_admin=user.is_admin,
+        security_question=user.security_question,
+        security_answer_hash=security_answer_hash
     )
 
     last_record_id = await database.execute(query)
@@ -53,9 +66,59 @@ async def register(user: UserCreate):
         id=last_record_id,
         email=user.email,
         is_active=True,
-        is_admin=user.is_admin
+        is_admin=user.is_admin,
+        security_question=user.security_question,
+        llm_model="llama-3.3-70b-versatile",
+        temperature=0.7,
+        max_tokens=1024,
+        enable_history=True,
+        enable_analytics=True
     )
 
+# -----------------------------
+# Forgot Password Endpoints
+# -----------------------------
+
+@router.post("/forgot-password", response_model=SecurityQuestionResponse)
+async def forgot_password(request: ForgotPasswordRequest):
+    user = await get_user_by_email(request.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    if not user["security_question"]:
+        raise HTTPException(status_code=400, detail="No security question set for this user")
+    
+    return {"security_question": user["security_question"]}
+
+@router.post("/verify-security-answer", response_model=VerifySecurityAnswerResponse)
+async def verify_security_answer(request: VerifySecurityAnswerRequest):
+    user = await get_user_by_email(request.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    if not user["security_answer_hash"]:
+        raise HTTPException(status_code=400, detail="Security answer not configured")
+
+    if not verify_password(request.answer, user["security_answer_hash"]):
+        raise HTTPException(status_code=401, detail="Incorrect security answer")
+    
+    return {"verified": True}
+
+@router.post("/reset-password")
+async def reset_password(request: ResetPasswordRequest):
+    user = await get_user_by_email(request.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Verify the answer again for security during the reset action
+    if not verify_password(request.security_answer, user["security_answer_hash"]):
+        raise HTTPException(status_code=401, detail="Verification failed")
+    
+    hashed_password = get_password_hash(request.new_password)
+    query = User.__table__.update().where(User.id == user["id"]).values(hashed_password=hashed_password)
+    await database.execute(query)
+    
+    return {"message": "Password reset successfully"}
 
 # -----------------------------
 # Login Endpoint
