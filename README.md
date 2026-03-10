@@ -5,7 +5,7 @@ The objective of this project is to streamline the research workflow by combinin
 
 --- 
 
-##  DEMO VIDEO 
+##  DEMO VIDEO
 ```
 https://youtu.be/EyCmc5188ZI
 ```
