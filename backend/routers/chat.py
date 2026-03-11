@@ -11,9 +11,6 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
 assistant = ResearchAssistant()
 
 
-# -----------------------------
-# CHAT WITH WORKSPACE PAPERS (with multi-turn memory)
-# -----------------------------
 @router.post("/{workspace_id}")
 async def chat_with_workspace(
     workspace_id: int,
@@ -73,9 +70,6 @@ async def chat_with_workspace(
     return {"response": ai_text}
 
 
-# -----------------------------
-# GET WORKSPACE DETAILS (papers + info)
-# -----------------------------
 @router.get("/{workspace_id}")
 async def get_workspace(
     workspace_id: int,
