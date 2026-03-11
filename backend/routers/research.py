@@ -11,9 +11,6 @@ import json
 router = APIRouter(prefix="/research", tags=["Research"])
 assistant = ResearchAssistant()
 
-# -----------------------------
-# AI SUMMARIZATION
-# -----------------------------
 @router.post("/summarize/{paper_id}")
 async def summarize_paper(
     paper_id: int,
@@ -28,9 +25,7 @@ async def summarize_paper(
     summary = assistant.generate_paper_summary(dict(paper))
     return {"id": paper_id, "summary": summary}
 
-# -----------------------------
-# RESEARCH TIMELINE
-# -----------------------------
+
 @router.post("/timeline/{workspace_id}")
 async def generate_timeline(
     workspace_id: int,
@@ -52,9 +47,7 @@ async def generate_timeline(
     # For now, we wrap it in a simple response
     return {"workspace_id": workspace_id, "timeline": timeline_text}
 
-# -----------------------------
-# SHARED RESEARCH NOTES
-# -----------------------------
+
 @router.get("/notes/{workspace_id}", response_model=List[ResearchNoteResponse])
 async def get_notes(
     workspace_id: int,
